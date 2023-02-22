@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Usuarios\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use App\Models\usuarios;
 use Illuminate\Http\Request;
 
 class ApiUsuarioController extends Controller
@@ -47,9 +48,24 @@ class ApiUsuarioController extends Controller
      * @param  \App\Models\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function show(User $user)
+    public function show($id)
     {
-        //
+        $status  = false;
+        $alert   = 'No se a encontrado el usuario.';
+        $data    = [];
+
+        $user = usuarios::with('user')->where('id',$id)->first();
+        if ($user!=null) {
+            $status =true;
+            $alert  = 'Usuario encontrado';
+            $data   = $user;
+        }
+
+        return [
+            'status'=> $status,
+            'alert' => $alert,
+            'data'  => $data
+        ];
     }
 
     /**
@@ -70,9 +86,10 @@ class ApiUsuarioController extends Controller
      * @param  \App\Models\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, User $user)
+    public function update(Request $request,$id)
     {
-        //
+        $user = new UpdateUsuarioController();
+        return $user->update($request,$id);
     }
 
     /**
