@@ -60,11 +60,12 @@ class UpdateUserController extends Controller
         $status = true;
         $messages = [
             'oldPasword.required'                     =>  'La antigua contraseña es requerida.',
+            'newpassword.regex'                       =>  'La contraseña debe tener al menos 6 caracteres, incluyendo al menos una letra mayúscula, una letra minúscula y un número.',
             'newpassword.required'                    =>  'La nueva contraseña es requerida.',
             'repeat_password.required'                =>  'La repetición de contraseña es requerida.',
         ];
         $validate = [
-            'newpassword'             =>  'required',
+            'newpassword'             => ['required', 'regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{6,}$/'],
             'oldPasword'              =>  'required',
             'repeat_password'         =>  'required'
         ];

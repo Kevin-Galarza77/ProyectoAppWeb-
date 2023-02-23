@@ -80,9 +80,9 @@ class CreatUsuarioController extends Controller
             'email.required'                    =>  'El email es requerido.',
             'email.email'                       =>  'El correo electrónico debe estar escrito en un formato correcto',
             'password.required'                 =>  'La contraseña es requerida.',
+            'password.regex'                    =>  'La contraseña debe tener al menos 6 caracteres, incluyendo al menos una letra mayúscula, una letra minúscula y un número.',
             'repeat_password.required'          =>  'La contraseña repetida es requerida.',
             'repeat_password.same'              =>  'Las contraseñas no coiniciden.',
-            'password.regex' => 'La contraseña debe tener al menos 6 caracteres, incluyendo al menos una letra mayúscula, una letra minúscula y un número.',
             'CI_Usuario.required'               =>  'El número de Cédula del usuario es requerido.',
             'CI_Usuario.numeric'                =>  'El número de Cédula debe tener solo digitos (números).',
             'CI_Usuario.digits'                 =>  'El número de Cédula debe tener 10 digitos.',
@@ -90,7 +90,7 @@ class CreatUsuarioController extends Controller
             'FechaNacimiento_Usuario.required'  =>  'La fecha de nacimiento del usuario es requerida.',
             'Cel_Usuario.required'              =>  'El Célular del usuario es requerido',
             'Cel_Usuario.numeric'               =>  'El Célular del usuario debe tener solo digitos (números).',
-            'Cel_Usuario.digits'                  =>  'El Célular del usuario debe tener 10 digitos.',
+            'Cel_Usuario.digits'                =>  'El Célular del usuario debe tener 10 digitos.',
             'Direccion_Usuario.required'        =>  'Una direccion es requerida',
         ];
 
