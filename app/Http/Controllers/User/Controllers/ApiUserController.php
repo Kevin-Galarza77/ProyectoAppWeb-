@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\User\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\User\Controllers\UpdateUserController;
 use App\Models\User;
 use Illuminate\Http\Request;
 
@@ -36,8 +37,7 @@ class ApiUserController extends Controller
      */
     public function store(Request $request)
     {
-        $user = new CreatUserController();
-        return $user->store($request);
+        //
     }
 
     /**
@@ -69,9 +69,10 @@ class ApiUserController extends Controller
      * @param  \App\Models\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, User $user)
+    public function update(Request $request, $id)
     {
-        //
+        $user = new UpdateUserController();
+        return $user->update($request, $id);
     }
 
     /**
