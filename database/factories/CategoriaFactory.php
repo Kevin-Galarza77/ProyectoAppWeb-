@@ -19,7 +19,7 @@ class CategoriaFactory extends Factory
         return [
             'nombre'   => $this->faker->sentence(),
             'public_id'=> $this->faker->paragraph(),
-            'url'      => $this->faker->paragraph(),
+            'url'      => $this->faker->imageUrl(),
         ];
     }
 }

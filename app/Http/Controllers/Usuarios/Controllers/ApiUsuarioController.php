@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\User;
 use App\Models\usuarios;
 use Illuminate\Http\Request;
+use Laravel\Sanctum\PersonalAccessToken;
 
 class ApiUsuarioController extends Controller
 {
@@ -38,7 +39,7 @@ class ApiUsuarioController extends Controller
     public function store(Request $request)
     {
         $usuario = new CreatUsuarioController();
-        
+
         return $usuario->store($request);
     }
 
@@ -48,24 +49,31 @@ class ApiUsuarioController extends Controller
      * @param  \App\Models\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($token)
     {
         $status  = false;
         $alert   = 'No se a encontrado el usuario.';
         $data    = [];
+        try {
+            $id      = PersonalAccessToken::findToken($token)->first()->tokenable_id;
+            $user    = usuarios::with('user')->where('id', $id)->first();
+            
+            if ($user != null) {
+                $status = true;
+                $alert  = 'Usuario encontrado';
+                $data   = $user;
+            }
 
-        $user = usuarios::with('user')->where('id',$id)->first();
-        if ($user!=null) {
-            $status =true;
-            $alert  = 'Usuario encontrado';
-            $data   = $user;
+        } catch (\Throwable $th) {
+            $th;
         }
 
         return [
-            'status'=> $status,
+            'status' => $status,
             'alert' => $alert,
             'data'  => $data
         ];
+        
     }
 
     /**
@@ -86,10 +94,10 @@ class ApiUsuarioController extends Controller
      * @param  \App\Models\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request,$id)
+    public function update(Request $request, $token)
     {
         $user = new UpdateUsuarioController();
-        return $user->update($request,$id);
+        return $user->update($request, $token);
     }
 
     /**

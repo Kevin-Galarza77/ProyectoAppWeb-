@@ -7,26 +7,28 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
+use Laravel\Sanctum\PersonalAccessToken;
 
 class UpdateUserController extends Controller
 {
 
-    public function update(Request $request, $id)
+    public function update(Request $request, $token)
     {
         $alert = 'No se pudo actualizar, intenta nuevamente';
         $status = false;
         $data = [];
         $messages = [];
 
-        $validator = $this->validateData($request->all(),$id);
+        $validator = $this->validateData($request->all());
 
         if ($validator['status'] == false) {
 
             $messages = $validator['messages'];
 
         } else {
-
-            $user = User::find($id);
+            
+            $user_id    = PersonalAccessToken::findToken($token)->first()->tokenable_id;
+            $user = User::find($user_id);
 
             if (Hash::check($request->oldPasword,$user->password)) {
 
@@ -55,7 +57,7 @@ class UpdateUserController extends Controller
     }
 
 
-    public function validateData($data,$id)
+    public function validateData($data)
     {
         $status = true;
         $messages = [

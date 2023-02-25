@@ -1,9 +1,12 @@
 <?php
 
 use App\Http\Controllers\Auth\AuthController;
+use App\Http\Controllers\Categorias\Aplication\ApiCategoriaController;
 use App\Http\Controllers\User\Controllers\ApiUserController;
 use App\Http\Controllers\Usuarios\Controllers\ApiUsuarioController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Productos\Aplication\ApiProductoController;
+use App\Http\Controllers\SubCategories\Aplication\ApiSubCategoriaController;
 
 /*
 |--------------------------------------------------------------------------
@@ -25,4 +28,8 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::post('logout', [AuthController::class, 'logout'])->name('logout');
     Route::resource('usuarios',ApiUsuarioController::class);
     Route::resource('user',ApiUserController::class);
+    Route::resource('categories',ApiCategoriaController::class);
+    Route::resource('subcategories',ApiSubCategoriaController::class);
+    Route::resource('products',ApiProductoController::class);
+    
 });

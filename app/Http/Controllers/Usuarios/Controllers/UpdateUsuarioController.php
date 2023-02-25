@@ -7,11 +7,12 @@ use App\Models\User;
 use App\Models\usuarios;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use Laravel\Sanctum\PersonalAccessToken;
 
 class UpdateUsuarioController extends Controller
 {
 
-    public function update(Request $request, $id)
+    public function update(Request $request, $token)
     {
 
         $alert = 'No se pudo actualizar, intenta nuevamente';
@@ -19,7 +20,11 @@ class UpdateUsuarioController extends Controller
         $data = [];
         $messages = [];
 
-        $validator = $this->validateData($request->all(),$id);
+        $user_id    = PersonalAccessToken::findToken($token)->first()->tokenable_id;
+        $usuario    = usuarios::where('user_id', $user_id)->first();
+        $user       = User::find($user_id);
+
+        $validator = $this->validateData($request->all(), $user_id, $usuario->id);
 
         if ($validator['status'] == false) {
 
@@ -27,12 +32,7 @@ class UpdateUsuarioController extends Controller
 
         } else {
 
-
-
-            $usuario = usuarios::find($id);
-            $user =  User::find($usuario->user_id);
-
-            $user->email             = $request['email'];
+            $user->email      = $request['email'];
             $user->updated_at = now('America/Guayaquil')->format('Y-m-d H:i:s');
             $user->update();
 
@@ -45,7 +45,6 @@ class UpdateUsuarioController extends Controller
 
             $status = true;
             $alert = 'El usuario se ha actualizado con exito';
-            
         }
 
         return [
@@ -57,7 +56,7 @@ class UpdateUsuarioController extends Controller
     }
 
 
-    public function validateData($data,$id)
+    public function validateData($data, $user_id, $usuario_id)
     {
         $status = true;
         $messages = [
@@ -77,11 +76,11 @@ class UpdateUsuarioController extends Controller
             'Direccion_Usuario.required'        =>  'Una direccion es requerida',
         ];
         $validate = [
-            'email'                   =>  'required|email|unique:users,email,' . auth()->id(),
-            'CI_Usuario'              => 'required|numeric|digits:10|unique:usuarios,CI_Usuario,' . $id,
+            'email'                   =>  'required|email|unique:users,email,' . $user_id,
+            'CI_Usuario'              => 'required|numeric|digits:10|unique:usuarios,CI_Usuario,' . $usuario_id,
             'Nombre_Usuario'          =>  'required',
             'FechaNacimiento_Usuario' =>  'required',
-            'Cel_Usuario'              => 'required|numeric|digits:10|unique:usuarios,Cel_Usuario,' . $id,
+            'Cel_Usuario'              => 'required|numeric|digits:10|unique:usuarios,Cel_Usuario,' . $usuario_id,
             'Direccion_Usuario'       =>  'required',
         ];
 

@@ -25,8 +25,6 @@ return new class extends Migration
             $table->unsignedBigInteger('user_id')->unique();
             $table->unsignedBigInteger('rol_id')->nullable();
 
-
-            
             $table->foreign('user_id')->references('id')
                     ->on('users')
                     ->onDelete('cascade')

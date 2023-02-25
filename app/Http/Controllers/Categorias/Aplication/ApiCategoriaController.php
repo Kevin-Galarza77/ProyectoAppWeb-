@@ -1,12 +1,12 @@
 <?php
+namespace App\Http\Controllers\Categorias\Aplication;
 
-namespace App\Http\Controllers;
+use App\Http\Controllers\Controller;
+use App\Models\Categoria;
+use App\Http\Requests\StoreCategoriaRequest;
+use App\Http\Requests\UpdateCategoriaRequest;
 
-use App\Models\SubCategoria;
-use App\Http\Requests\StoreSubCategoriaRequest;
-use App\Http\Requests\UpdateSubCategoriaRequest;
-
-class SubCategoriaController extends Controller
+class ApiCategoriaController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,7 +15,8 @@ class SubCategoriaController extends Controller
      */
     public function index()
     {
-        //
+        $categories = Categoria::all();
+        return $categories;
     }
 
     /**
@@ -31,10 +32,10 @@ class SubCategoriaController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \App\Http\Requests\StoreSubCategoriaRequest  $request
+     * @param  \App\Http\Requests\StoreCategoriaRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreSubCategoriaRequest $request)
+    public function store(StoreCategoriaRequest $request)
     {
         //
     }
@@ -42,10 +43,10 @@ class SubCategoriaController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\SubCategoria  $subCategoria
+     * @param  \App\Models\Categoria  $categoria
      * @return \Illuminate\Http\Response
      */
-    public function show(SubCategoria $subCategoria)
+    public function show(Categoria $categoria)
     {
         //
     }
@@ -53,10 +54,10 @@ class SubCategoriaController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\SubCategoria  $subCategoria
+     * @param  \App\Models\Categoria  $categoria
      * @return \Illuminate\Http\Response
      */
-    public function edit(SubCategoria $subCategoria)
+    public function edit(Categoria $categoria)
     {
         //
     }
@@ -64,11 +65,11 @@ class SubCategoriaController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \App\Http\Requests\UpdateSubCategoriaRequest  $request
-     * @param  \App\Models\SubCategoria  $subCategoria
+     * @param  \App\Http\Requests\UpdateCategoriaRequest  $request
+     * @param  \App\Models\Categoria  $categoria
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateSubCategoriaRequest $request, SubCategoria $subCategoria)
+    public function update(UpdateCategoriaRequest $request, Categoria $categoria)
     {
         //
     }
@@ -76,10 +77,10 @@ class SubCategoriaController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\SubCategoria  $subCategoria
+     * @param  \App\Models\Categoria  $categoria
      * @return \Illuminate\Http\Response
      */
-    public function destroy(SubCategoria $subCategoria)
+    public function destroy(Categoria $categoria)
     {
         //
     }

@@ -21,6 +21,15 @@ return new class extends Migration
             $table->decimal('Precio_Producto');
             $table->string('public_id');
             $table->string('url');
+            $table->string('Descripcion_Producto');
+            $table->unsignedBigInteger('subCategoria_id');
+
+            $table->foreign('subCategoria_id')->references('id')
+                ->on('sub_categorias')
+                ->onDelete('cascade')
+                ->onUpdate('cascade');
+
+
             $table->timestamps();
         });
     }

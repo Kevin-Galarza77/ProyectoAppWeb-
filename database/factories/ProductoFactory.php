@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\SubCategoria;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -23,6 +24,8 @@ class ProductoFactory extends Factory
             "Precio_Producto"=>$this->faker->numberBetween(0,200),
             "public_id"=>$this->faker->word(),
             "url"=>$this->faker->imageUrl(),
+            "Descripcion_Producto"=>"1x12 unidades",
+            "subCategoria_id"=>SubCategoria::all()->random()->id
         ];
     }
 }

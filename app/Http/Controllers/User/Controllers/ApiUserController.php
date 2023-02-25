@@ -69,10 +69,10 @@ class ApiUserController extends Controller
      * @param  \App\Models\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $token)
     {
         $user = new UpdateUserController();
-        return $user->update($request, $id);
+        return $user->update($request, $token);
     }
 
     /**
