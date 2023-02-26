@@ -46,9 +46,10 @@ class ApiCategoriaController extends Controller
      * @param  \App\Models\Categoria  $categoria
      * @return \Illuminate\Http\Response
      */
-    public function show(Categoria $categoria)
+    public function show($id)
     {
-        //
+        $categoria = Categoria::find($id);
+        return $categoria;
     }
 
     /**

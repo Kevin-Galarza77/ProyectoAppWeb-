@@ -56,11 +56,27 @@ class ApiSubCategoriaController extends Controller
         $alert = 'Se ha producido un error al extraer las subcategoria(s)';
         $messages = [];
 
-        $validator = Validator::make(
-            $request->all(),
-            ['categoria_id' => 'required'],
-            ['categoria_id.required' => 'La categoria es requerido']
-        );
+        switch ($typeSearch) {
+
+            case 'ForCategory':
+                $validator = Validator::make(
+                    $request->all(),
+                    ['categoria_id' => 'required'],
+                    ['categoria_id.required' => 'La categoria es requerido']
+                );
+                break;
+            case 'Subcategory':
+                $validator = Validator::make(
+                    $request->all(),
+                    ['subcategoria_id' => 'required'],
+                    ['subcategoria_id.required' => 'La SubCategoria es requerido']
+                );
+            default:
+                # code...
+                break;
+        }
+
+
 
         if ($validator->fails()) {
 
@@ -70,12 +86,16 @@ class ApiSubCategoriaController extends Controller
             switch ($typeSearch) {
 
                 case 'ForCategory':
-                    $subcategorias = SubCategoria::where('categoria_id', 1)->get();
+                    $subcategorias = SubCategoria::where('categoria_id', $request->categoria_id)->get();
                     $alert  = 'Se encontraron las subcategorias';
                     $status = true;
                     $data   = $subcategorias;
                     break;
-                
+                case 'Subcategory':
+                    $subcategorias = SubCategoria::find($request->subcategoria_id);
+                    $alert  = 'Se encontro la subcategoria';
+                    $status = true;
+                    $data   = $subcategorias;
                 default:
                     # code...
                     break;
