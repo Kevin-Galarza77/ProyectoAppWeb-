@@ -21,6 +21,8 @@ use App\Http\Controllers\SubCategories\Aplication\ApiSubCategoriaController;
 
 Route::post('login', [AuthController::class, 'login']);
 Route::resource('register', ApiUsuarioController::class);
+Route::post('password/forgot', 'App\Http\Controllers\Password\ForgotPasswordController@forgot');
+Route::post('password/reset', 'App\Http\Controllers\Password\ResetPasswordController@reset');
 
 
 
