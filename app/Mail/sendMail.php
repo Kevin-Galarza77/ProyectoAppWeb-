@@ -19,8 +19,8 @@ class sendMail extends Mailable
 
     public function build(){
         return $this->from('jimenezkev1040@gmail.com', env('MAIL_FROM_NAME'))
-            ->view('test')
-            ->subject('Titulo del Correo')
+            ->view('linkPassword')
+            ->subject('Resetear Contraseña')
             ->with($this->data);
     }
 }
