@@ -18,7 +18,7 @@ class MailController extends Controller
     }
 
     public function senMail(){
-        $url='http://localhost:4200/Reset-Password/'.$this->token;
+        $url='http://localhost:4200/Forgot-Password/'.$this->token;
         $data = ['mail' => $this->mail, 'token'=>$this->token, 'url'=>$url];
         Mail::to($this->mail)->send(new sendMail($data));
     }
