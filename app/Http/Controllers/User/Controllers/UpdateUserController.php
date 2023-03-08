@@ -28,7 +28,7 @@ class UpdateUserController extends Controller
         } else {
             
             $user_id    = PersonalAccessToken::findToken($token)->first()->tokenable_id;
-            $user = User::find($user_id);
+            $user       = User::find($user_id);
 
             if (Hash::check($request->oldPasword,$user->password)) {
 

@@ -3,10 +3,10 @@
 namespace App\Http\Controllers\Productos\Aplication;
 
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\Productos\Controllers\CreateProductoController;
+use App\Http\Controllers\Productos\Controllers\UpdateProductoController;
 use App\Models\Producto;
 use Illuminate\Http\Request;
-use App\Http\Requests\StoreProductoRequest;
-use App\Http\Requests\UpdateProductoRequest;
 use App\Models\User;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\DB;
@@ -21,6 +21,24 @@ class ApiProductoController extends Controller
      */
     public function index()
     {
+
+        $status     = false;
+        $alert      = 'No se han encontrado los productos';
+        $data       = [];
+        $productos = Producto::all();
+
+        if ($productos != null) {
+            $status = true;
+            $alert  = 'Se han encontrado los productos';
+            $data   = $productos;
+        }
+   
+        return [
+            'alert'     =>  $alert,
+            'status'    =>  $status,
+            'data'      =>  $data
+        ];
+
     }
 
     /**
@@ -39,9 +57,10 @@ class ApiProductoController extends Controller
      * @param  \App\Http\Requests\StoreProductoRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreProductoRequest $request)
+    public function store(Request $request)
     {
-        //
+        $producto = new CreateProductoController();
+        return $producto->store($request);
     }
 
     /**
@@ -154,9 +173,10 @@ class ApiProductoController extends Controller
      * @param  \App\Models\Producto  $producto
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateProductoRequest $request, Producto $producto)
+    public function update($id,Request $request)
     {
-        //
+        $producto = new UpdateProductoController();
+        return $producto->update($request,$id);
     }
 
     /**
@@ -165,8 +185,26 @@ class ApiProductoController extends Controller
      * @param  \App\Models\Producto  $producto
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Producto $producto)
+    public function destroy($id)
     {
-        //
+        
+        $status     = false;
+        $alert      = 'Se ha producido un error al eliinar el producto';
+        $messages   = ['No se ha encontrado el producto'];
+    
+
+        $producto = Producto::find($id);
+        if ($producto!== null) {
+            $status     = true;
+            $alert      = 'Se ha eliminado el producto';    
+            $messages   = [];
+        }
+
+        return [
+            'alert'     =>  $alert,
+            'status'    =>  $status,
+            'messages'  =>  $messages
+        ];
+
     }
 }
