@@ -8,20 +8,24 @@ use App\Models\Producto;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary;
+use Illuminate\Support\Facades\Log;
 
 class UpdateProductoController extends Controller
 {
     public function update(Request $request, $id)
     {
-        dd($request->all());
+        Log::info('Information message: ' . $request->all());
         $alert    = 'No se pudo actualilzar el producto, intenta nuevamente';
         $status   = false;
         $messages = [];
 
+        // Obtener los datos enviados
+        $codProd = $request->input('codigo_Producto');
+
         $producto = Producto::find($id);
 
         if ($producto != null) {
-            dd($request->all());
+            //dd($request->all());
             $validator = $this->validateData($request->all());
 
             if ($validator['status'] == false) {
@@ -29,9 +33,9 @@ class UpdateProductoController extends Controller
                 $messages = $validator['messages'];
             } else {
 
-                $producto = Producto::find($id);
+                //$producto = Producto::find($id);
 
-                $producto->codigo_Producto       =  $request['codigo_Producto'];
+                $producto->codigo_Producto       =  $request->input('codigo_Producto');
                 $producto->Nombre_Producto       =  $request['Nombre_Producto'];
                 $producto->Stock_Producto        =  $request['Stock_Producto'];
                 $producto->Precio_Producto       =  $request['Precio_Producto'];

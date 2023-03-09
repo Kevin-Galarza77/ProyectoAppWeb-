@@ -189,7 +189,7 @@ class ApiProductoController extends Controller
     {
         
         $status     = false;
-        $alert      = 'Se ha producido un error al eliinar el producto';
+        $alert      = 'Se ha producido un error al eliminar el producto';
         $messages   = ['No se ha encontrado el producto'];
     
 
