@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\SubCategories\Controllers;
 
 use App\Http\Controllers\Controller;
-use App\Models\SubCategories;
+use App\Models\SubCategoria;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary;
@@ -22,20 +22,22 @@ class CreateSubCategoriesController extends Controller
         if ($validator['status'] == false) {
 
             $messages = $validator['messages'];
+
         } else {
 
-            $subcategories = new Subcategories();
+            $subcategories = new SubCategoria();
 
-            $subcategories->id       =  $request['id'];
             $subcategories->nombre   =  $request['nombre'];
 
             $file = request()->file('imagen');
             $obj  = Cloudinary::upload($file->getRealPath(), ['folder' => 'products']);
 
-            $subcategories->url         =  $obj->getSecurePath();
+            $subcategories->public_id    =  $obj->getPublicId();
+            $subcategories->url          =  $obj->getSecurePath();
+
             $subcategories->categoria_id = $request['Categoria_id'];
-            $subcategories->created_at  =  now('America/Guayaquil')->format('Y-m-d H:i:s');
-            $subcategories->updated_at  =  now('America/Guayaquil')->format('Y-m-d H:i:s');
+            $subcategories->created_at   =  now('America/Guayaquil')->format('Y-m-d H:i:s');
+            $subcategories->updated_at   =  now('America/Guayaquil')->format('Y-m-d H:i:s');
             $subcategories->save();
 
             $status = true;
@@ -54,18 +56,17 @@ class CreateSubCategoriesController extends Controller
     {
         $status = true;
         $messages = [
-            'id.required'        => 'El id es requerido.',
-            'nombre.required'    => 'El nombre es requerido.',
-            'imagen.required'    => 'La imagen es requerida.',
-            'imagen.image'       => 'La imagen no contiene un archivo compatible.',
-            'imagen.mimes'       => 'La imagen no contiene un archivo compatible.'
+            'nombre.required'         => 'El nombre es requerido.',
+            'imagen.required'         => 'La imagen es requerida.',
+            'categoria_id.required'   => 'El id de la categoria es requerida.',
+            'imagen.image'            => 'La imagen no contiene un archivo compatible.',
+            'imagen.mimes'            => 'La imagen no contiene un archivo compatible.'
         ];
 
         $validate = [
-            'id'       => 'required',
-            'nombre'   => 'required',
+            'nombre'       => 'required',
             'categoria_id' => 'required',
-            'imagen'   => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'imagen'       => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ];
 
         $validator = Validator::make($data, $validate, $messages);

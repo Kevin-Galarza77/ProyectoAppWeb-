@@ -14,13 +14,11 @@ class UpdateProductoController extends Controller
 {
     public function update(Request $request, $id)
     {
-        Log::info('Information message: ' . $request->all());
+        
         $alert    = 'No se pudo actualilzar el producto, intenta nuevamente';
         $status   = false;
         $messages = [];
 
-        // Obtener los datos enviados
-        $codProd = $request->input('codigo_Producto');
 
         $producto = Producto::find($id);
 
@@ -31,11 +29,10 @@ class UpdateProductoController extends Controller
             if ($validator['status'] == false) {
 
                 $messages = $validator['messages'];
+                
             } else {
 
-                //$producto = Producto::find($id);
-
-                $producto->codigo_Producto       =  $request->input('codigo_Producto');
+                $producto->codigo_Producto       =  $request['codigo_Producto'];
                 $producto->Nombre_Producto       =  $request['Nombre_Producto'];
                 $producto->Stock_Producto        =  $request['Stock_Producto'];
                 $producto->Precio_Producto       =  $request['Precio_Producto'];
@@ -54,7 +51,7 @@ class UpdateProductoController extends Controller
                 $producto->update();
 
                 $status = true;
-                $alert = 'El producto se ha registrado con exito';
+                $alert = 'El producto se ha actualizado con exito';
             }
         }
 
@@ -78,7 +75,7 @@ class UpdateProductoController extends Controller
             'Descripcion_Producto.required' => 'La descripcion es requerida.',
             'subCategoria_id.required'      => 'La Sub Categoria es requerida.',
             'subCategoria_id.numeric'       => 'La Sub Categoria debe ser numerica.',
-            'imagen.required'               => 'La imagen es requerida.',
+            // 'imagen.required'               => 'La imagen es requerida.',
             'imagen.image'                  => 'La imagen no contiene un archivo compatible.',
             'imagen.mimes'                  => 'La imagen no contiene un archivo compatible.'
         ];
@@ -90,7 +87,7 @@ class UpdateProductoController extends Controller
             'Precio_Producto'       => 'required|numeric',
             'Descripcion_Producto'  => 'required',
             'subCategoria_id'       => 'required|numeric',
-            'imagen'                => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'imagen'                => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ];
 
         $validator = Validator::make($data, $validate, $messages);

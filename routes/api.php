@@ -35,5 +35,4 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::resource('subcategories',ApiSubCategoriaController::class);
     Route::resource('products',ApiProductoController::class);
     Route::resource('pedidos',ApiCabeceraPedidosController::class);
-    
 });
