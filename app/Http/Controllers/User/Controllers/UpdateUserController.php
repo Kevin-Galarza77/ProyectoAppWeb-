@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Validator;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Laravel\Sanctum\PersonalAccessToken;
+use Illuminate\Validation\Rule;
 
 class UpdateUserController extends Controller
 {
@@ -56,6 +57,53 @@ class UpdateUserController extends Controller
         ];
     }
 
+    public function updateEstadoUSer(Request $request){
+
+        $alert = 'No se pudo actualizar el estado del usuario, intenta nuevamente';
+        $status = false;
+        $data = [];
+        $messages = [];
+
+        $validator = Validator::make(
+
+            $request->all(),
+            [
+                'estado_users' => ['required', 'numeric', Rule::exists('estado_users', 'id')],
+                'user_id'      => ['required', 'numeric', Rule::exists('users', 'id')]
+            ],
+            [
+                'estado_users.required' => 'El id del Estado es requerido',
+                'estado_users.numeric'  => 'El id del Estado es numerico',
+                'estado_users.exists'   => 'El id del Estado no existe',
+                'user_id.required'      => 'El id del Usuario es requerido',
+                'user_id.numeric'       => 'El id del Usuario es numerico',
+                'user_id.exists'        => 'El id del Usuario no existe'
+            ]
+        );
+
+        if ($validator->fails()) {
+
+            $messages = $validator->errors()->all();
+        
+        }else{
+
+            $user = User::find($request->user_id);
+            $user->estado_users = $request->estado_users;
+            $user->update();
+
+            $status=true;
+            $alert= 'Se a actualizado el estado del usuario';
+
+        }
+
+        return [
+            'alert'     =>  $alert,
+            'messages'  =>  $messages,
+            'status'    =>  $status,
+            'data'      =>  $data
+        ];
+
+    }
 
     public function validateData($data)
     {

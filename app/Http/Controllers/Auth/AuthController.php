@@ -25,8 +25,6 @@ class AuthController extends Controller
 
         $validator = $this->validateLogin($request->all());
 
-        // dd($validator);
-
         if ($validator['status'] == false) {
 
             $messages = $validator['messages'];
@@ -40,18 +38,24 @@ class AuthController extends Controller
                 $alert = 'Correo o contraseña incorrectos.';
                 
             } else {
+
+                if ($user->estado_users == 1) {
+
+                    $messages = ['Espera que el adminstrador verifique tu cuenta'];
                 
-                if (!$user->tokens->isEmpty()) {
+                }else{
+                    if (!$user->tokens->isEmpty()) {
 
-                    $alert = 'El usuario ya se encuentra autenticado';
-                    $auth = true;
-
-                } else {
-
-                    $token  = $user->createToken('auth-token')->plainTextToken;
-                    $status = true;
-                    $alert  = 'Inicio de sesión exitoso!';
-                    $data   = $user;
+                        $alert = 'El usuario ya se encuentra autenticado';
+                        $auth = true;
+    
+                    } else {
+    
+                        $token  = $user->createToken('auth-token')->plainTextToken;
+                        $status = true;
+                        $alert  = 'Inicio de sesión exitoso!';
+                        $data   = $user;
+                    }
                 }
             }
         }

@@ -1,13 +1,12 @@
 <?php
 
-namespace App\Http\Controllers\User\Controllers;
+namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
-use App\Http\Controllers\User\Controllers\UpdateUserController;
-use App\Models\User;
-use Illuminate\Http\Request;
+use App\Models\EstadoUser;
+use App\Http\Requests\StoreEstadoUserRequest;
+use App\Http\Requests\UpdateEstadoUserRequest;
 
-class ApiUserController extends Controller
+class EstadoUserController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -32,10 +31,10 @@ class ApiUserController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Http\Requests\StoreEstadoUserRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreEstadoUserRequest $request)
     {
         //
     }
@@ -43,10 +42,10 @@ class ApiUserController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\User  $user
+     * @param  \App\Models\EstadoUser  $estadoUser
      * @return \Illuminate\Http\Response
      */
-    public function show(User $user)
+    public function show(EstadoUser $estadoUser)
     {
         //
     }
@@ -54,10 +53,10 @@ class ApiUserController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\User  $user
+     * @param  \App\Models\EstadoUser  $estadoUser
      * @return \Illuminate\Http\Response
      */
-    public function edit(User $user)
+    public function edit(EstadoUser $estadoUser)
     {
         //
     }
@@ -65,29 +64,22 @@ class ApiUserController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\User  $user
+     * @param  \App\Http\Requests\UpdateEstadoUserRequest  $request
+     * @param  \App\Models\EstadoUser  $estadoUser
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $token)
+    public function update(UpdateEstadoUserRequest $request, EstadoUser $estadoUser)
     {
-        $user = new UpdateUserController();
-
-        if (is_numeric($token)) {
-            return $user->updateEstadoUSer($request);
-        }else {
-            
-            return $user->update($request, $token);
-        }
+        //
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\User  $user
+     * @param  \App\Models\EstadoUser  $estadoUser
      * @return \Illuminate\Http\Response
      */
-    public function destroy(User $user)
+    public function destroy(EstadoUser $estadoUser)
     {
         //
     }

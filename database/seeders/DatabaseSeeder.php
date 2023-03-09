@@ -8,6 +8,7 @@ use App\Models\Cabecera_Pedidos;
 use App\Models\Categoria;
 use App\Models\Detalle_Pedido;
 use App\Models\Estados_Pedidos;
+use App\Models\EstadoUser;
 use App\Models\Producto;
 use App\Models\rol;
 use App\Models\SubCategoria;
@@ -25,6 +26,7 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
+        EstadoUser::factory(2)->create();
         User::factory(100)->create();
         rol::factory(2)->create();
         usuarios::factory(10)->create();
