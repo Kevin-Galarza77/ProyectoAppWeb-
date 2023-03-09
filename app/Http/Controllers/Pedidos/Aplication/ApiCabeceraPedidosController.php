@@ -5,9 +5,11 @@ namespace App\Http\Controllers\Pedidos\Aplication;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Pedidos\Controllers\CreateCabeceraPedidosController;
 use App\Models\Cabecera_Pedidos;
+use App\Models\usuarios;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
+use Laravel\Sanctum\PersonalAccessToken;
 
 class ApiCabeceraPedidosController extends Controller
 {
@@ -50,39 +52,71 @@ class ApiCabeceraPedidosController extends Controller
      * @param  \App\Models\Cabecera_Pedidos  $cabecera_Pedidos
      * @return \Illuminate\Http\Response
      */
-    public function show($id,Request $request)
+    public function show($id, Request $request)
     {
 
         $status = false;
         $alert = 'Se ha producido un error al encontrar el pedido';
         $messages = [];
-        $data=[];
+        $data = [];
 
-        $validator = Validator::make(
-            $request->all(),
-            [
-                'cabezara_id' => ['required', 'numeric', Rule::exists('cabecera__pedidos', 'id')]
-            ],
-            [
-                'cabezara_id.required' => 'El id de la Cabezera es requerido',
-                'cabezara_id.numeric'  => 'El id de la Cabezera es numerico',
-                'cabezara_id.exists'   => 'El id de la Cabezera no existe'
-            ]
-        );
+
+        switch ($id) {
+            case 'ForCabezeraId':
+                $validator = Validator::make(
+                    $request->all(),
+                    [
+                        'cabezara_id' => ['required', 'numeric', Rule::exists('cabecera__pedidos', 'id')]
+                    ],
+                    [
+                        'cabezara_id.required' => 'El id de la Cabezera es requerido',
+                        'cabezara_id.numeric'  => 'El id de la Cabezera es numerico',
+                        'cabezara_id.exists'   => 'El id de la Cabezera no existe'
+                    ]
+                );
+                break;
+
+            case 'ForUserId':
+                $validator = Validator::make(
+                    $request->all(),
+                    [
+                        'token' => ['required']
+                    ],
+                    [
+                        'token.required'       => 'El token del usuario es requerido'
+                    ]
+                );
+                break;
+        }
+
+
 
         if ($validator->fails()) {
             $messages = $validator->errors()->all();
-        }else{
+        } else {
             switch ($id) {
                 case 'ForCabezeraId':
                     $pedido = Cabecera_Pedidos::with('detalles_pedidos')->find($request->cabezara_id);
-                    $data = $pedido;
-                    $alert = 'Se ha encontrado el pedido';
-                    $status = true;
+                    if ($pedido != null) {
+                        $data = $pedido;
+                        $alert = 'Se ha encontrado el pedido';
+                        $status = true;
+                    }
                     break;
-                
-                default:
-                    # code...
+
+                case 'ForUserId':
+                    try {
+                        $user_id    = PersonalAccessToken::findToken($request->token)->first()->tokenable_id;
+                        $usuario    = usuarios::where('user_id', $user_id)->first();
+                        $pedidos     = Cabecera_Pedidos::with('detalles_pedidos')->where('usuario_id', $usuario->id)->get();
+                        if ($pedidos != null) {
+                            $data       = $pedidos;
+                            $alert      = 'Se han encontrado los pedidos';
+                            $status     = true;
+                        }
+                    } catch (\Throwable $th) {
+                        $messages = ['El token no existe'];
+                    }
                     break;
             }
         }
@@ -94,7 +128,6 @@ class ApiCabeceraPedidosController extends Controller
             'messages'  =>  $messages,
             'data'      =>  $data
         ];
-        
     }
 
     /**
@@ -147,7 +180,7 @@ class ApiCabeceraPedidosController extends Controller
                     $cabezera->estados__pedido_id  = $request->estado;
                     $cabezera->update();
 
-                    $alert='Se ha actualizado el estado del pedido exitosamente';
+                    $alert = 'Se ha actualizado el estado del pedido exitosamente';
                     $status = true;
                     break;
 
@@ -162,7 +195,6 @@ class ApiCabeceraPedidosController extends Controller
             'status'    =>  $status,
             'messages'  =>  $messages
         ];
-
     }
 
     /**
