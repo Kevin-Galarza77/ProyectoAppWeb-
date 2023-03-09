@@ -20,5 +20,9 @@ class Cabecera_Pedidos extends Model
     public function tipo_entrega__pedidos(){
         return $this->hasOne(TipoEntrega_Pedidos::class);
     }
+
+    public function detalles_pedidos(){
+        return $this->hasMany(Detalle_Pedido::class,'cabecera__pedido_id');
+    }
     
 }

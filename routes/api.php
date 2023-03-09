@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\Categorias\Aplication\ApiCategoriaController;
+use App\Http\Controllers\Pedidos\Aplication\ApiCabeceraPedidosController;
 use App\Http\Controllers\User\Controllers\ApiUserController;
 use App\Http\Controllers\Usuarios\Controllers\ApiUsuarioController;
 use Illuminate\Support\Facades\Route;
@@ -33,5 +34,6 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::resource('categories',ApiCategoriaController::class);
     Route::resource('subcategories',ApiSubCategoriaController::class);
     Route::resource('products',ApiProductoController::class);
+    Route::resource('pedidos',ApiCabeceraPedidosController::class);
     
 });
