@@ -78,7 +78,6 @@ class UpdateProductoController extends Controller
             'Descripcion_Producto.required' => 'La descripcion es requerida.',
             'subCategoria_id.required'      => 'La Sub Categoria es requerida.',
             'subCategoria_id.numeric'       => 'La Sub Categoria debe ser numerica.',
-            'imagen.required'               => 'La imagen es requerida.',
             'imagen.image'                  => 'La imagen no contiene un archivo compatible.',
             'imagen.mimes'                  => 'La imagen no contiene un archivo compatible.'
         ];
@@ -90,7 +89,7 @@ class UpdateProductoController extends Controller
             'Precio_Producto'       => 'required|numeric',
             'Descripcion_Producto'  => 'required',
             'subCategoria_id'       => 'required|numeric',
-            'imagen'                => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'imagen'                => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ];
 
         $validator = Validator::make($data, $validate, $messages);

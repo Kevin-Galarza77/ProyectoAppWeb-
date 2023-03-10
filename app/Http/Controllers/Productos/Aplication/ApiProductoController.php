@@ -195,6 +195,7 @@ class ApiProductoController extends Controller
 
         $producto = Producto::find($id);
         if ($producto!== null) {
+            $producto->delete();
             $status     = true;
             $alert      = 'Se ha eliminado el producto';    
             $messages   = [];
