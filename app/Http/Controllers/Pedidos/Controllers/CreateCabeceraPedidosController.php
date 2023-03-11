@@ -47,8 +47,6 @@ class CreateCabeceraPedidosController extends Controller
     
             $detalles = $Createdetalles->store($cabezera->id,$request->detalles);
 
-            // dd($detalles);
-
             if (!$detalles['status']) {
                 $cabezera->delete();
                 $messages = $detalles['messages'];
@@ -57,9 +55,6 @@ class CreateCabeceraPedidosController extends Controller
                 $status = true;
             }
 
-            // dd($cabezera);
-
-            // $alert = 'El pedido se ha registrado con exito';
         }
 
         return [
