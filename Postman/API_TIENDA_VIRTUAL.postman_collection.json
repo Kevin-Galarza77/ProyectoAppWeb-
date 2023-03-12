@@ -1,0 +1,620 @@
+{
+	"info": {
+		"_postman_id": "9a1a5200-c505-48bf-a021-63d7509ddcac",
+		"name": "API_TIENDA_VIRTUAL",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "login",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "email",
+							"value": "gabyscorrea@hotmail.es",
+							"type": "default"
+						},
+						{
+							"key": "password",
+							"value": "Joss1234",
+							"type": "default"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:8000/api/login",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getProducts",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "Bearer 2|vJSpNkAL6ASWiCDXOF3xee2ZmhpfRwdPpbx6P8aY",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8000/api/products",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"products"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getProductsFavorites",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "Bearer 2|vJSpNkAL6ASWiCDXOF3xee2ZmhpfRwdPpbx6P8aY",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8000/api/products/favorites?token=2|vJSpNkAL6ASWiCDXOF3xee2ZmhpfRwdPpbx6P8aY",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"products",
+						"favorites"
+					],
+					"query": [
+						{
+							"key": "token",
+							"value": "2|vJSpNkAL6ASWiCDXOF3xee2ZmhpfRwdPpbx6P8aY"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "CreateProduct",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "Bearer 2|vJSpNkAL6ASWiCDXOF3xee2ZmhpfRwdPpbx6P8aY",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "codigo_Producto",
+							"value": "666",
+							"type": "default"
+						},
+						{
+							"key": "Nombre_Producto",
+							"value": "jajaja",
+							"type": "default"
+						},
+						{
+							"key": "Stock_Producto",
+							"value": "1000",
+							"type": "default"
+						},
+						{
+							"key": "Precio_Producto",
+							"value": "3.50",
+							"contentType": "text/plain",
+							"type": "default"
+						},
+						{
+							"key": "Descripcion_Producto",
+							"value": "jajajajaa",
+							"type": "default"
+						},
+						{
+							"key": "subCategoria_id",
+							"value": "2",
+							"type": "default"
+						},
+						{
+							"key": "imagen",
+							"contentType": "image/jpeg",
+							"type": "file",
+							"src": "/C:/Users/PC/Pictures/img1.png"
+						}
+					],
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8000/api/products",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"products"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "UpdateProduct",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "2|vJSpNkAL6ASWiCDXOF3xee2ZmhpfRwdPpbx6P8aY",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "codigo_Producto",
+							"value": "666",
+							"contentType": "",
+							"type": "default"
+						},
+						{
+							"key": "Nombre_Producto",
+							"value": "guanchaca",
+							"contentType": "",
+							"type": "default"
+						},
+						{
+							"key": "Stock_Producto",
+							"value": "666",
+							"contentType": "",
+							"type": "default"
+						},
+						{
+							"key": "Descripcion_Producto",
+							"value": "cualquier cosa",
+							"contentType": "",
+							"type": "default"
+						},
+						{
+							"key": "subCategoria_id",
+							"value": "2",
+							"contentType": "",
+							"type": "default"
+						},
+						{
+							"key": "imagen",
+							"contentType": "image/jpeg",
+							"type": "file",
+							"src": "/C:/Users/PC/Pictures/pilsener03.jpg"
+						},
+						{
+							"key": "Precio_Producto",
+							"value": "1000",
+							"type": "default"
+						}
+					],
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8000/api/products/104",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"products",
+						"104"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "DeleteProduct",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "2|vJSpNkAL6ASWiCDXOF3xee2ZmhpfRwdPpbx6P8aY",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8000/api/products/2",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"products",
+						"2"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getCategories",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "2|vJSpNkAL6ASWiCDXOF3xee2ZmhpfRwdPpbx6P8aY",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8000/api/categories",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"categories"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "CreateCategories",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "2|vJSpNkAL6ASWiCDXOF3xee2ZmhpfRwdPpbx6P8aY",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "nombre",
+							"value": "licores",
+							"type": "default"
+						},
+						{
+							"key": "imagen",
+							"type": "file",
+							"src": "/C:/Users/PC/Pictures/pilsener03.jpg"
+						}
+					],
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8000/api/categories",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"categories"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "UpdateCategories",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "2|vJSpNkAL6ASWiCDXOF3xee2ZmhpfRwdPpbx6P8aY",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "nombre",
+							"value": "tequila",
+							"type": "default"
+						},
+						{
+							"key": "imagen",
+							"type": "file",
+							"src": "/C:/Users/PC/Pictures/TEQUILA-CHARRO-SILVER.jpg"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:8000/api/categories/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"categories",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "DeleteCategories",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "2|vJSpNkAL6ASWiCDXOF3xee2ZmhpfRwdPpbx6P8aY",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8000/api/categories/3",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"categories",
+						"3"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getSubcategories",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "2|vJSpNkAL6ASWiCDXOF3xee2ZmhpfRwdPpbx6P8aY",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8000/api/subcategories",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"subcategories"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "CreateSubcategories",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "2|vJSpNkAL6ASWiCDXOF3xee2ZmhpfRwdPpbx6P8aY",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "nombre",
+							"value": "club",
+							"type": "default"
+						},
+						{
+							"key": "categoria_id",
+							"value": "4",
+							"type": "default"
+						},
+						{
+							"key": "imagen",
+							"type": "file",
+							"src": "/C:/Users/PC/Pictures/cZWgBQpzEentkk9Ww-CERVEZA PREMIUM CLUB VERDE.png"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:8000/api/subcategories",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"subcategories"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "UpdateSubcategories",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "2|vJSpNkAL6ASWiCDXOF3xee2ZmhpfRwdPpbx6P8aY",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "nombre",
+							"value": "runaucho",
+							"type": "default"
+						},
+						{
+							"key": "categoria_id",
+							"value": "2",
+							"type": "default"
+						},
+						{
+							"key": "imagen",
+							"type": "file",
+							"src": "/C:/Users/PC/Pictures/img1.png"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:8000/api/subcategories/2",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"subcategories",
+						"2"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "DeleteSubcategories",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "2|vJSpNkAL6ASWiCDXOF3xee2ZmhpfRwdPpbx6P8aY",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8000/api/subcategories/5",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"subcategories",
+						"5"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
