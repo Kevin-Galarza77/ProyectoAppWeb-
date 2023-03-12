@@ -3,10 +3,10 @@
 namespace App\Http\Controllers\SubCategories\Aplication;
 
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\SubCategories\Controllers\UpdateSubCategoriaController;
+use App\Http\Controllers\SubCategories\Controllers\CreateSubCategoriaController;
 use App\Models\SubCategoria;
 use Illuminate\Support\Facades\Validator;
-use App\Http\Requests\StoreSubCategoriaRequest;
-use App\Http\Requests\UpdateSubCategoriaRequest;
 use Illuminate\Http\Request;
 
 class ApiSubCategoriaController extends Controller
@@ -18,7 +18,22 @@ class ApiSubCategoriaController extends Controller
      */
     public function index()
     {
-        return SubCategoria::all();
+        $status     = false;
+        $alert      = 'No se han encontrado las categorias';
+        $data       = [];
+        $subCategoria = SubCategoria::all();
+
+        if ($subCategoria != null) {
+            $status = true;
+            $alert  = 'Se han encontrado las categorias';
+            $data   = $subCategoria;
+        }
+
+        return [
+            'alert'     =>  $alert,
+            'status'    =>  $status,
+            'data'      =>  $data
+        ];
     }
 
     /**
@@ -35,11 +50,12 @@ class ApiSubCategoriaController extends Controller
      * Store a newly created resource in storage.
      *
      * @param  \App\Http\Requests\StoreSubCategoriaRequest  $request
-     * @return \Illuminate\Http\Response
+     * @return array
      */
-    public function store(StoreSubCategoriaRequest $request)
+    public function store(Request $request)
     {
-        //
+        $subCategoria = new CreateSubCategoriaController();
+        return $subCategoria->store($request);
     }
 
     /**
@@ -75,7 +91,6 @@ class ApiSubCategoriaController extends Controller
                 # code...
                 break;
         }
-
 
 
         if ($validator->fails()) {
@@ -126,21 +141,41 @@ class ApiSubCategoriaController extends Controller
      *
      * @param  \App\Http\Requests\UpdateSubCategoriaRequest  $request
      * @param  \App\Models\SubCategoria  $subCategoria
-     * @return \Illuminate\Http\Response
+     * @return array
      */
-    public function update(UpdateSubCategoriaRequest $request, SubCategoria $subCategoria)
+    public function update(Request $request, $id)
     {
-        //
+        $subCategoria = new UpdateSubCategoriaController();
+        return $subCategoria->update($request, $id);
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\SubCategoria  $subCategoria
+     * @param \App\Models\SubCategoria $subCategoria
+     * @param $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(SubCategoria $subCategoria)
+    public function destroy($id)
     {
-        //
+        $status     = false;
+        $alert      = 'Se ha producido un error al eliminar la SubCategoria';
+        $messages   = ['No se ha encontrado la SubCategoria'];
+
+
+        $subCategoria = subcategoria::find($id);
+        if ($subCategoria!== null) {
+            $subCategoria->delete();
+            $status     = true;
+            $alert      = 'Se ha eliminado la SubCategoria';
+            $messages   = [];
+        }
+
+        return [
+            'alert'     =>  $alert,
+            'status'    =>  $status,
+            'messages'  =>  $messages
+        ];
+
     }
 }

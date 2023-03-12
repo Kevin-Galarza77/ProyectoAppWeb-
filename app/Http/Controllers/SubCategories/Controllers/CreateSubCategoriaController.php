@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary;
 
-class CreateSubCategoriesController extends Controller
+class CreateSubCategoriaController extends Controller
 {
     public function store(Request $request)
     {
@@ -25,23 +25,22 @@ class CreateSubCategoriesController extends Controller
 
         } else {
 
-            $subcategories = new SubCategoria();
+            $subCategoria = new SubCategoria();
 
-            $subcategories->nombre   =  $request['nombre'];
+            $subCategoria->nombre  =  $request['nombre'];
 
             $file = request()->file('imagen');
-            $obj  = Cloudinary::upload($file->getRealPath(), ['folder' => 'products']);
+            $obj  = Cloudinary::upload($file->getRealPath(), ['folder' => 'subCategoria']);
 
-            $subcategories->public_id    =  $obj->getPublicId();
-            $subcategories->url          =  $obj->getSecurePath();
-
-            $subcategories->categoria_id = $request['Categoria_id'];
-            $subcategories->created_at   =  now('America/Guayaquil')->format('Y-m-d H:i:s');
-            $subcategories->updated_at   =  now('America/Guayaquil')->format('Y-m-d H:i:s');
-            $subcategories->save();
+            $subCategoria->public_id    =  $obj->getPublicId();
+            $subCategoria->url          =  $obj->getSecurePath();
+            $subCategoria->categoria_id = $request['categoria_id'];
+            $subCategoria->created_at   =  now('America/Guayaquil')->format('Y-m-d H:i:s');
+            $subCategoria->updated_at   =  now('America/Guayaquil')->format('Y-m-d H:i:s');
+            $subCategoria->save();
 
             $status = true;
-            $alert = 'La subcategoria se ha registrado con exito';
+            $alert = 'La SubCategoria se ha registrado con exito';
 
         }
         return [
@@ -57,8 +56,8 @@ class CreateSubCategoriesController extends Controller
         $status = true;
         $messages = [
             'nombre.required'         => 'El nombre es requerido.',
-            'imagen.required'         => 'La imagen es requerida.',
             'categoria_id.required'   => 'El id de la categoria es requerida.',
+            'imagen.required'         => 'La imagen es requerida.',
             'imagen.image'            => 'La imagen no contiene un archivo compatible.',
             'imagen.mimes'            => 'La imagen no contiene un archivo compatible.'
         ];

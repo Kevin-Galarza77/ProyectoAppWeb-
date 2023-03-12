@@ -12,7 +12,7 @@ class CreateProductoController extends Controller
 {
     public function store(Request $request)
     {
-        $alert = 'No se pudo actualizar el producto, intenta nuevamente';
+        $alert = 'No se pudo crear la subcategoria, intenta nuevamente';
         $status = false;
         $data = [];
         $messages = [];
@@ -65,7 +65,7 @@ class CreateProductoController extends Controller
             'Precio_Producto.required'      => 'El precio es requerido.',
             'Precio_Producto.numeric'       => 'El precio debe ser un número.',
             'Descripcion_Producto.required' => 'La descripcion es requerida.',
-            'subCategoria_id.required'      => 'La Sub Categoria es requerida.',
+            'subCa tegoria_id.required'      => 'La Sub Categoria es requerida.',
             'subCategoria_id.numeric'       => 'La Sub Categoria debe ser numerica.',
             'imagen.required'               => 'La imagen es requerida.',
             'imagen.image'                  => 'La imagen no contiene un archivo compatible.',

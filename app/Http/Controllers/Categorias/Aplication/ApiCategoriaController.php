@@ -1,10 +1,12 @@
 <?php
+
 namespace App\Http\Controllers\Categorias\Aplication;
 
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\Categorias\Controllers\CreateCategoriaController;
+use App\Http\Controllers\Categorias\Controllers\UpdateCategoriaController;
 use App\Models\Categoria;
-use App\Http\Requests\StoreCategoriaRequest;
-use App\Http\Requests\UpdateCategoriaRequest;
+use Illuminate\Http\Request;
 
 class ApiCategoriaController extends Controller
 {
@@ -15,8 +17,22 @@ class ApiCategoriaController extends Controller
      */
     public function index()
     {
-        $categories = Categoria::all();
-        return $categories;
+        $status     = false;
+        $alert      = 'No se han encontrado las categorias';
+        $data       = [];
+        $categorias = Categoria::all();
+
+        if ($categorias != null) {
+            $status = true;
+            $alert  = 'Se han encontrado las categorias';
+            $data   = $categorias;
+        }
+
+        return [
+            'alert'     =>  $alert,
+            'status'    =>  $status,
+            'data'      =>  $data
+        ];
     }
 
     /**
@@ -33,11 +49,12 @@ class ApiCategoriaController extends Controller
      * Store a newly created resource in storage.
      *
      * @param  \App\Http\Requests\StoreCategoriaRequest  $request
-     * @return \Illuminate\Http\Response
+     * @return array
      */
-    public function store(StoreCategoriaRequest $request)
+    public function store(Request $request)
     {
-        //
+        $categoria = new CreateCategoriaController();
+        return $categoria->store($request);
     }
 
     /**
@@ -70,19 +87,38 @@ class ApiCategoriaController extends Controller
      * @param  \App\Models\Categoria  $categoria
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateCategoriaRequest $request, Categoria $categoria)
+    public function update($id, Request $request)
     {
-        //
+        $categoria = new UpdateCategoriaController();
+        return $categoria->update($request, $id);
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Categoria  $categoria
+     * @param \App\Models\Categoria $categoria
+     * @param $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Categoria $categoria)
+    public function destroy($id)
     {
-        //
+        $status     = false;
+        $alert      = 'Se ha producido un error al eliminar la Categoria';
+        $messages   = ['No se ha encontrado la Categoria'];
+
+
+        $categoria = Categoria::find($id);
+        if ($categoria!== null) {
+            $categoria->delete();
+            $status     = true;
+            $alert      = 'Se ha eliminado la Categoria';
+            $messages   = [];
+        }
+
+        return [
+            'alert'     =>  $alert,
+            'status'    =>  $status,
+            'messages'  =>  $messages
+        ];
     }
 }

@@ -21,7 +21,6 @@ class ApiProductoController extends Controller
      */
     public function index()
     {
-
         $status     = false;
         $alert      = 'No se han encontrado los productos';
         $data       = [];
@@ -32,7 +31,7 @@ class ApiProductoController extends Controller
             $alert  = 'Se han encontrado los productos';
             $data   = $productos;
         }
-   
+
         return [
             'alert'     =>  $alert,
             'status'    =>  $status,
@@ -93,7 +92,7 @@ class ApiProductoController extends Controller
                     ['subcategory_id.required' => 'La subcategory del producto es requerido']
                 );
                 break;
-            
+
             default:
                 # code...
                 break;
@@ -110,7 +109,7 @@ class ApiProductoController extends Controller
 
                     $user_id    = PersonalAccessToken::findToken($request->token)->first()->tokenable_id;
                     $user       = User::find($user_id);
-                    
+
                     $resultados = DB::table('cabecera__pedidos as CP')
                         ->join('detalle__pedidos as DP', 'CP.ID', '=', 'DP.cabecera__pedido_id')
                         ->join('productos as PRO', 'PRO.id', '=', 'DP.producto_id')
@@ -175,9 +174,9 @@ class ApiProductoController extends Controller
      */
     public function update($id,Request $request)
     {
+
         $producto = new UpdateProductoController();
-        return $producto->update($request,$id);
-    }
+        return $producto->update($request,$id);    }
 
     /**
      * Remove the specified resource from storage.
@@ -187,17 +186,17 @@ class ApiProductoController extends Controller
      */
     public function destroy($id)
     {
-        
+
         $status     = false;
         $alert      = 'Se ha producido un error al eliminar el producto';
         $messages   = ['No se ha encontrado el producto'];
-    
+
 
         $producto = Producto::find($id);
         if ($producto!== null) {
             $producto->delete();
             $status     = true;
-            $alert      = 'Se ha eliminado el producto';    
+            $alert      = 'Se ha eliminado el producto';
             $messages   = [];
         }
 
