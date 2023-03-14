@@ -76,7 +76,6 @@ class ApiUserController extends Controller
         if (is_numeric($token)) {
             return $user->updateEstadoUSer($request);
         }else {
-            
             return $user->update($request, $token);
         }
     }
