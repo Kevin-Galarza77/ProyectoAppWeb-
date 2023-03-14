@@ -17,7 +17,8 @@ class ApiUsuarioController extends Controller
      */
     public function index()
     {
-        //
+        $usuarios = usuarios::with('user')->get();
+        return $usuarios;
     }
 
     /**
