@@ -20,7 +20,7 @@ class ApiCabeceraPedidosController extends Controller
      */
     public function index()
     {
-        $pedidos = Cabecera_Pedidos::with('detalles_pedidos')->get();
+        $pedidos = Cabecera_Pedidos::with('detalles_pedidos.productos','usuario')->get();
         return $pedidos;
     }
 
@@ -108,7 +108,7 @@ class ApiCabeceraPedidosController extends Controller
                     try {
                         $user_id    = PersonalAccessToken::findToken($request->token)->first()->tokenable_id;
                         $usuario    = usuarios::where('user_id', $user_id)->first();
-                        $pedidos     = Cabecera_Pedidos::with('detalles_pedidos')->where('usuario_id', $usuario->id)->get();
+                        $pedidos     = Cabecera_Pedidos::with('detalles_pedidos.productos','usuario')->where('usuario_id', $usuario->id)->get();
                         if ($pedidos != null) {
                             $data       = $pedidos;
                             $alert      = 'Se han encontrado los pedidos';

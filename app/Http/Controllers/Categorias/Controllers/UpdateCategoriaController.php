@@ -14,8 +14,7 @@ class UpdateCategoriaController extends Controller
 {
     public function update(Request $request, $id)
     {
-        $l = Log(0);
-        $l.error_log($request);
+
         $alert    = 'No se pudo actualilzar la Categoria, intenta nuevamente';
         $status   = false;
         $messages = [];
@@ -62,7 +61,7 @@ class UpdateCategoriaController extends Controller
     {
         $status = true;
         $messages = [
-            'nombre.required'      => 'El codigo de la categoria es requerido.',
+            'nombre.required'      => 'El nombre de la categoria es requerido.',
             'imagen.image'         => 'La imagen no contiene un archivo compatible.',
             'imagen.mimes'         => 'La imagen no contiene un archivo compatible.'
         ];

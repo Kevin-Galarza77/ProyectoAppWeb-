@@ -76,11 +76,11 @@ class UpdateUsuarioController extends Controller
             'Direccion_Usuario.required'        =>  'Una direccion es requerida',
         ];
         $validate = [
-            'email'                   =>  'required|email|unique:users,email,' . $user_id,
-            'CI_Usuario'              => 'required|numeric|digits:10|unique:usuarios,CI_Usuario,' . $usuario_id,
+            'email'                   =>  'required|email|unique:users,email,' . $user_id .',id',
+            'CI_Usuario'              => 'required|numeric|digits:10|unique:usuarios,CI_Usuario,' . $usuario_id .',id',
             'Nombre_Usuario'          =>  'required',
             'FechaNacimiento_Usuario' =>  'required',
-            'Cel_Usuario'              => 'required|numeric|digits:10|unique:usuarios,Cel_Usuario,' . $usuario_id,
+            'Cel_Usuario'              => 'required|numeric|digits:10|unique:usuarios,Cel_Usuario,' . $usuario_id .',id',
             'Direccion_Usuario'       =>  'required',
         ];
 

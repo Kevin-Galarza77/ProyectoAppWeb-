@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Categorias\Aplication;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Categorias\Controllers\CreateCategoriaController;
 use App\Http\Controllers\Categorias\Controllers\UpdateCategoriaController;
+use CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary;
 use App\Models\Categoria;
 use Illuminate\Http\Request;
 
@@ -87,7 +88,7 @@ class ApiCategoriaController extends Controller
      * @param  \App\Models\Categoria  $categoria
      * @return \Illuminate\Http\Response
      */
-    public function update($id, Request $request)
+    public function update(Request $request,$id)
     {
         $categoria = new UpdateCategoriaController();
         return $categoria->update($request, $id);
@@ -109,6 +110,7 @@ class ApiCategoriaController extends Controller
 
         $categoria = Categoria::find($id);
         if ($categoria!== null) {
+            Cloudinary::destroy($categoria->public_id);
             $categoria->delete();
             $status     = true;
             $alert      = 'Se ha eliminado la Categoria';

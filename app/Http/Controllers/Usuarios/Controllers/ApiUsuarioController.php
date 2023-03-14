@@ -56,14 +56,12 @@ class ApiUsuarioController extends Controller
         $data    = [];
         try {
             $id      = PersonalAccessToken::findToken($token)->first()->tokenable_id;
-            $user    = usuarios::with('user')->where('id', $id)->first();
-            
+            $user    = usuarios::with('user')->where('user_id', $id)->first();
             if ($user != null) {
                 $status = true;
                 $alert  = 'Usuario encontrado';
                 $data   = $user;
             }
-
         } catch (\Throwable $th) {
             $th;
         }

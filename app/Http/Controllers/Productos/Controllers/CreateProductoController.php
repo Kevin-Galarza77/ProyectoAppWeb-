@@ -12,7 +12,7 @@ class CreateProductoController extends Controller
 {
     public function store(Request $request)
     {
-        $alert = 'No se pudo crear la subcategoria, intenta nuevamente';
+        $alert = 'No se pudo crear el producto, intenta nuevamente';
         $status = false;
         $data = [];
         $messages = [];

@@ -24,7 +24,7 @@ class ApiProductoController extends Controller
         $status     = false;
         $alert      = 'No se han encontrado los productos';
         $data       = [];
-        $productos = Producto::all();
+        $productos = Producto::with('subcategoria')->get();
 
         if ($productos != null) {
             $status = true;
