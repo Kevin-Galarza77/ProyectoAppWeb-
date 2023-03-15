@@ -39,8 +39,9 @@ class AuthController extends Controller
                 
             } else {
 
-                if ($user->estado_users == 1) {
+                if ($user->estado_users == 2) {
 
+                    $alert = 'Cuenta inactiva';
                     $messages = ['Espera que el adminstrador verifique tu cuenta'];
                 
                 }else{

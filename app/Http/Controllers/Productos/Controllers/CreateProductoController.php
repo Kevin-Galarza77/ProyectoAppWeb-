@@ -32,7 +32,7 @@ class CreateProductoController extends Controller
             $producto->Precio_Producto       =  $request['Precio_Producto'];
 
             $file = request()->file('imagen');
-            $obj  = Cloudinary::upload($file->getRealPath(), ['folder' => 'products']);
+            $obj  = Cloudinary::upload($file->getRealPath(), ['folder' => 'Productos']);
 
             $producto->public_id             =  $obj->getPublicId();
             $producto->url                   =  $obj->getSecurePath();

@@ -27,7 +27,7 @@ class UpdateSubCategoriaController extends Controller
             } else {
                 $subCategoria->id  = $request['id'];
                 $subCategoria->nombre = $request['nombre'];
-                $subCategoria->url = $request['url'];
+                // $subCategoria->url = $request['url'];
                 $subCategoria->categoria_id  = $request['categoria_id'];
                 $subCategoria->updated_at = now('America/Guayaquil')->format('Y-m-d H:i:s');
 

@@ -30,7 +30,7 @@ class CreateSubCategoriaController extends Controller
             $subCategoria->nombre  =  $request['nombre'];
 
             $file = request()->file('imagen');
-            $obj  = Cloudinary::upload($file->getRealPath(), ['folder' => 'subCategoria']);
+            $obj  = Cloudinary::upload($file->getRealPath(), ['folder' => 'SubCategorias']);
 
             $subCategoria->public_id    =  $obj->getPublicId();
             $subCategoria->url          =  $obj->getSecurePath();

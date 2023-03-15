@@ -29,7 +29,7 @@ class CreateCategoriaController extends Controller
             $categoria->nombre  =  $request['nombre'];
 
             $file = request()->file('imagen');
-            $obj  = Cloudinary::upload($file->getRealPath(), ['folder' => 'catagories']);
+            $obj  = Cloudinary::upload($file->getRealPath(), ['folder' => 'Categorias']);
 
             $categoria->public_id             =  $obj->getPublicId();
             $categoria->url                   =  $obj->getSecurePath();

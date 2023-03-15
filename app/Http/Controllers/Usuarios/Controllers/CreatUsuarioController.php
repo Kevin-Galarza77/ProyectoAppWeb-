@@ -8,6 +8,7 @@ use App\Models\usuarios;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
+
 class CreatUsuarioController extends Controller
 {
 
@@ -27,6 +28,8 @@ class CreatUsuarioController extends Controller
 
         } else {
 
+            
+
             if (User::where('email', $request->email)->first()!=null) {
                 
                 $messages=['Este email ya se encuentra registrado.'];
@@ -41,19 +44,21 @@ class CreatUsuarioController extends Controller
             
             }else{
 
-                $user = new User;
+                $user = new User();
                 $user->email             = $request['email'];
                 $user->email_verified_at = now('America/Guayaquil')->format('Y-m-d H:i:s');
                 $user->password          = bcrypt($request['password']);
+                $user->estado_users      = 2;
                 $user->save();
     
-                $usuario = new usuarios;
+                $usuario = new usuarios();
                 $usuario->CI_Usuario                = $request['CI_Usuario'];
                 $usuario->Nombre_Usuario            = $request['Nombre_Usuario'];
                 $usuario->FechaNacimiento_Usuario   = $request['FechaNacimiento_Usuario'];
                 $usuario->Cel_Usuario               = $request['Cel_Usuario'];
                 $usuario->Direccion_Usuario         = $request['Direccion_Usuario'];
                 $usuario->User_id                   = $user->id ;
+                $usuario->rol_id                    = 2;
                 $usuario->save();
                 
                 $status=true;
