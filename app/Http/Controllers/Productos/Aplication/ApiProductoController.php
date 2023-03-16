@@ -112,7 +112,7 @@ class ApiProductoController extends Controller
                     $resultados = DB::table('cabecera__pedidos as CP')
                         ->join('detalle__pedidos as DP', 'CP.ID', '=', 'DP.cabecera__pedido_id')
                         ->join('productos as PRO', 'PRO.id', '=', 'DP.producto_id')
-                        ->select('DP.producto_id', 'PRO.Nombre_Producto', 'PRO.Precio_Producto', 'PRO.Stock_Producto', 'PRO.url', 'PRO.Descripcion_Producto', DB::raw('COUNT(*) as FRECUENCIA_COMPRA'))
+                        ->select('DP.producto_id as id', 'PRO.Nombre_Producto', 'PRO.Precio_Producto', 'PRO.Stock_Producto', 'PRO.url', 'PRO.Descripcion_Producto', DB::raw('COUNT(*) as FRECUENCIA_COMPRA'))
                         ->where('usuario_id', '=', $user->id)
                         ->groupBy('CP.ID', 'DP.producto_id', 'PRO.Nombre_Producto', 'PRO.Precio_Producto', 'PRO.Stock_Producto', 'PRO.url', 'PRO.Descripcion_Producto')
                         ->orderBy('FRECUENCIA_COMPRA', 'DESC')
