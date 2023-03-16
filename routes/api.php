@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\Categorias\Aplication\ApiCategoriaController;
+use App\Http\Controllers\Messeges\Aplication\ApiMessegesController;
 use App\Http\Controllers\Pedidos\Aplication\ApiCabeceraPedidosController;
 use App\Http\Controllers\User\Controllers\ApiUserController;
 use App\Http\Controllers\Usuarios\Controllers\ApiUsuarioController;
@@ -27,9 +28,11 @@ Route::post('password/reset', 'App\Http\Controllers\Password\ResetPasswordContro
 
 
 Route::middleware(['auth:sanctum'])->group(function () {
+    
     Route::post('logout', [AuthController::class, 'logout'])->name('logout');
     Route::resource('usuarios',ApiUsuarioController::class);
     Route::resource('user',ApiUserController::class);
+    Route::resource('messeges',ApiMessegesController::class);
 
     Route::get('categories','App\Http\Controllers\Categorias\Aplication\ApiCategoriaController@index');
     Route::get('categories/{id}','App\Http\Controllers\Categorias\Aplication\ApiCategoriaController@show');

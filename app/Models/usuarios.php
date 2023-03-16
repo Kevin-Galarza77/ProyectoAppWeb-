@@ -21,5 +21,9 @@ class usuarios extends Model
         return $this->hasMany(Cabecera_Pedidos::class);
     }
 
+    public function messeges(){
+        return $this->hasMany(Messeges::class);
+    }
+
 }
 
