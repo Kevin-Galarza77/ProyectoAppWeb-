@@ -13,7 +13,7 @@ use Illuminate\Validation\Rule;
 class UpdateUserController extends Controller
 {
 
-    public function update(Request $request, $token)
+    public function update(Request $request, $user_id)
     {
         $alert = 'No se pudo actualizar, intenta nuevamente';
         $status = false;
@@ -28,7 +28,6 @@ class UpdateUserController extends Controller
 
         } else {
             
-            $user_id    = PersonalAccessToken::findToken($token)->first()->tokenable_id;
             $user       = User::find($user_id);
 
             if (Hash::check($request->oldPasword,$user->password)) {

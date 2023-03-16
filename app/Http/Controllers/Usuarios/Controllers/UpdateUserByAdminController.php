@@ -7,9 +7,8 @@ use App\Models\User;
 use App\Models\usuarios;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
-use Laravel\Sanctum\PersonalAccessToken;
 
-class UpdateUsuarioController extends Controller
+class UpdateUserByAdminController extends Controller
 {
 
     public function update(Request $request, $user_id)
@@ -20,7 +19,6 @@ class UpdateUsuarioController extends Controller
         $data = [];
         $messages = [];
 
- 
         $usuario    = usuarios::where('user_id', $user_id)->first();
         $user       = User::find($user_id);
 
@@ -33,7 +31,9 @@ class UpdateUsuarioController extends Controller
         } else {
 
             $user->email      = $request['email'];
-            $user->updated_at = now('America/Guayaquil')->format('Y-m-d H:i:s');
+
+            $user->updated_at        = now('America/Guayaquil')->format('Y-m-d H:i:s');
+            $user->estado_users      = $request['estado_users'];
             $user->update();
 
             $usuario->CI_Usuario                = $request['CI_Usuario'];
@@ -41,10 +41,13 @@ class UpdateUsuarioController extends Controller
             $usuario->FechaNacimiento_Usuario   = $request['FechaNacimiento_Usuario'];
             $usuario->Cel_Usuario               = $request['Cel_Usuario'];
             $usuario->Direccion_Usuario         = $request['Direccion_Usuario'];
+            $usuario->rol_id                    = $request['rol_id'];
+
             $usuario->update();
 
             $status = true;
             $alert = 'El usuario se ha actualizado con exito';
+            
         }
 
         return [
@@ -74,6 +77,10 @@ class UpdateUsuarioController extends Controller
             'Cel_Usuario.digits'                =>  'El Célular del usuario debe tener 10 digitos.',
             'Cel_Usuario.unique'                =>  'El Célular ya se encuentra registrado.',
             'Direccion_Usuario.required'        =>  'Una direccion es requerida',
+            'rol_id.required'                   =>  'El rol del usuario es requerido.',
+            'rol_id.numeric'                    =>  'El rol debe ser un numero',
+            'estado_users.required'             =>  'El Estado del usuario es requerido.',
+            'estado_users.numeric'              =>  'El Estado debe ser un numero'
         ];
         $validate = [
             'email'                   =>  'required|email|unique:users,email,' . $user_id .',id',
@@ -82,6 +89,8 @@ class UpdateUsuarioController extends Controller
             'FechaNacimiento_Usuario' =>  'required',
             'Cel_Usuario'              => 'required|numeric|digits:10|unique:usuarios,Cel_Usuario,' . $usuario_id .',id',
             'Direccion_Usuario'       =>  'required',
+            'rol_id'                  =>  'required|numeric',
+            'estado_users'            =>  'required|numeric'
         ];
 
         $validator = Validator::make($data, $validate, $messages);

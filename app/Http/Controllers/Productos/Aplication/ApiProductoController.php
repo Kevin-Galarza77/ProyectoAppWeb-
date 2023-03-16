@@ -80,8 +80,8 @@ class ApiProductoController extends Controller
             case 'favorites':
                 $validator = Validator::make(
                     $request->all(),
-                    ['token' => 'required'],
-                    ['token.required' => 'El token es requerido']
+                    ['user_id' => 'required'],
+                    ['user_id.required' => 'El Id del usuario es requerido']
                 );
                 break;
 
@@ -107,8 +107,7 @@ class ApiProductoController extends Controller
             switch ($id) {
                 case 'favorites':
 
-                    $user_id    = PersonalAccessToken::findToken($request->token)->first()->tokenable_id;
-                    $user       = User::find($user_id);
+                    $user       = User::find($request->user_id);
 
                     $resultados = DB::table('cabecera__pedidos as CP')
                         ->join('detalle__pedidos as DP', 'CP.ID', '=', 'DP.cabecera__pedido_id')

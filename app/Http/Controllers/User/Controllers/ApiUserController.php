@@ -69,15 +69,12 @@ class ApiUserController extends Controller
      * @param  \App\Models\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $token)
+    public function update(Request $request, $user_id)
     {
         $user = new UpdateUserController();
 
-        if (is_numeric($token)) {
-            return $user->updateEstadoUSer($request);
-        }else {
-            return $user->update($request, $token);
-        }
+
+        return $user->update($request, $user_id);
     }
 
     /**

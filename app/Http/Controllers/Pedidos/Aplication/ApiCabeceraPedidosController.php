@@ -80,10 +80,10 @@ class ApiCabeceraPedidosController extends Controller
                 $validator = Validator::make(
                     $request->all(),
                     [
-                        'token' => ['required']
+                        'user_id' => ['required']
                     ],
                     [
-                        'token.required'       => 'El token del usuario es requerido'
+                        'user_id.required'       => 'El user_id del usuario es requerido'
                     ]
                 );
                 break;
@@ -106,8 +106,7 @@ class ApiCabeceraPedidosController extends Controller
 
                 case 'ForUserId':
                     try {
-                        $user_id    = PersonalAccessToken::findToken($request->token)->first()->tokenable_id;
-                        $usuario    = usuarios::where('user_id', $user_id)->first();
+                        $usuario    = usuarios::where('user_id', $request->user_id)->first();
                         $pedidos     = Cabecera_Pedidos::with('detalles_pedidos.productos','usuario')->where('usuario_id', $usuario->id)->get();
                         if ($pedidos != null) {
                             $data       = $pedidos;

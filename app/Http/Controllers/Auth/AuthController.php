@@ -7,8 +7,7 @@ use App\Models\User;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
-
-
+use Laravel\Sanctum\PersonalAccessToken;
 
 class AuthController extends Controller
 {
@@ -48,7 +47,12 @@ class AuthController extends Controller
                     if (!$user->tokens->isEmpty()) {
 
                         $alert = 'El usuario ya se encuentra autenticado';
+                        $tokenExists = PersonalAccessToken::where('tokenable_id',$user->id);
+                        $tokenExists->delete();
+                        $token  = $user->createToken('auth-token')->plainTextToken;
                         $auth = true;
+                        $data   = $user;
+                        $status = true;
     
                     } else {
     

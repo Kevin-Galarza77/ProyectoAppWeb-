@@ -7,6 +7,7 @@ use App\Models\User;
 use App\Models\usuarios;
 use Illuminate\Http\Request;
 use Laravel\Sanctum\PersonalAccessToken;
+use Illuminate\Support\Facades\Validator;
 
 class ApiUsuarioController extends Controller
 {
@@ -39,9 +40,29 @@ class ApiUsuarioController extends Controller
      */
     public function store(Request $request)
     {
-        $usuario = new CreatUsuarioController();
+        $validator = Validator::make($request->all(), [
+            'opcion' => 'required|boolean'
+        ], [
+            'opcion.required' => 'La opción para crear el usuario es requerida',
+            'opcion.boolean' => 'La opción para crear el usuario debe ser verdadero o falso'
+        ]);
 
-        return $usuario->store($request);
+        if ($validator->fails()) {
+            $messages = $validator->errors()->all();
+            $status = false;
+            return [
+                'messages'   =>  $messages,
+                'status'     =>  $status
+            ];
+        } else {
+            if ($request['opcion']) {
+                $usuario = new CreatUsuarioController();
+                return $usuario->store($request);
+            } else {
+                $usuario = new CreatUserByAdminController();
+                return $usuario->store($request);
+            }
+        }
     }
 
     /**
@@ -50,14 +71,13 @@ class ApiUsuarioController extends Controller
      * @param  \App\Models\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function show($token)
+    public function show($user_id)
     {
         $status  = false;
         $alert   = 'No se a encontrado el usuario.';
         $data    = [];
         try {
-            $id      = PersonalAccessToken::findToken($token)->first()->tokenable_id;
-            $user    = usuarios::with('user')->where('user_id', $id)->first();
+            $user    = usuarios::with('user')->where('user_id', $user_id)->first();
             if ($user != null) {
                 $status = true;
                 $alert  = 'Usuario encontrado';
@@ -72,7 +92,6 @@ class ApiUsuarioController extends Controller
             'alert' => $alert,
             'data'  => $data
         ];
-        
     }
 
     /**
@@ -93,10 +112,32 @@ class ApiUsuarioController extends Controller
      * @param  \App\Models\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $token)
+    public function update(Request $request, $user_id)
     {
-        $user = new UpdateUsuarioController();
-        return $user->update($request, $token);
+
+        $validator = Validator::make($request->all(), [
+            'opcion' => 'required|boolean'
+        ], [
+            'opcion.required' => 'La opción para actualizar el usuario es requerida',
+            'opcion.boolean' => 'La opción para actualizar el usuario debe ser verdadero o falso'
+        ]);
+
+        if ($validator->fails()) {
+            $messages = $validator->errors()->all();
+            $status = false;
+            return [
+                'messages'   =>  $messages,
+                'status'     =>  $status
+            ];
+        } else{
+            if ($request['opcion']){
+                $user = new UpdateUserByAdminController();
+                return $user->update($request, $user_id);
+            }else{
+                $user = new UpdateUsuarioController();
+                return $user->update($request, $user_id);
+            }
+        }
     }
 
     /**
