@@ -26,11 +26,11 @@ class CreateCabeceraPedidosController extends Controller
         if ($validator['status'] == false) {
 
             $messages = $validator['messages'];
+            
         } else {
 
             $cabezera = new Cabecera_Pedidos();
-            $user_id    = PersonalAccessToken::findToken($request->token)->first()->tokenable_id;
-            $usuario    = usuarios::where('user_id', $user_id)->first();
+            $usuario    = usuarios::where('user_id', $request->user_id)->first();
 
             $cabezera->Tipo_Pago_NotaVenta       = $request->Tipo_Pago_NotaVenta;
             $cabezera->Total_Pago_NotaVenta      = $request->Total_Pago_NotaVenta;
@@ -74,8 +74,7 @@ class CreateCabeceraPedidosController extends Controller
             'Tipo_Pago_NotaVenta.in'            =>  'El Tipo de pago de la Nota de Venta solo puede ser Credito o Efectivo',
             'Total_Pago_NotaVenta.required'     =>  'El total de la Nota de Venta es requerida',
             'Total_Pago_NotaVenta.numeric'      =>  'El total de la Nota de Venta debe ser un dato numerico',
-            'Direccion_NotaVenta.required'      =>  'La Direccion de la Nota de Venta es requerida',
-            'token.required'                    =>  'El token del usuario es requerido',
+            'user_id.required'                    =>  'El token del usuario es requerido',
             'tipo_entrega__pedido_id.required'  =>  'El Tipo de Entraga de la Nota de Venta es requerido',
             'tipo_entrega__pedido_id.numeric'   =>  'El Tipo de Entraga de la Nota de Venta es numerico',
             'detalles.required'                 =>  'Los Detalles de la Nota de Venta son requeridos',
@@ -86,8 +85,7 @@ class CreateCabeceraPedidosController extends Controller
         $validate = [
             'Tipo_Pago_NotaVenta'      =>  'required|in:Credito,Efectivo',
             'Total_Pago_NotaVenta'     =>  'required|numeric',
-            'Direccion_NotaVenta'      =>  'required',
-            'token'                    =>  'required',
+            'user_id'                  =>  'required',
             'tipo_entrega__pedido_id'  =>  'required|numeric',
             'detalles'                 =>  'required|array|min:1',
         ];
